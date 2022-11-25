@@ -20,13 +20,13 @@ def BFS_DFS(OR):
     Explored = []
     Frontier = []
     Frontier.append(Start)
-    for x in range(6):
+    while True:
         N = Frontier.pop(OR)
         print("Exploring ", N, " Now...")
-        print("   Frontier: ", Frontier)
 
         if N == End:
             print("____________________We Found Solution____________________")
+            break
 
         Frontier.extend(G1.getFrontier(N))
         print("   Frontier: ", Frontier)
