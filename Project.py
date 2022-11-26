@@ -14,45 +14,71 @@ class Graphe():
 
     def getFrontier(self, f):
         return self.Graphe[f]
+##############################################################################
 
+
+def Path():
+    P = []
+    P.append(End)
+    C = P[-1]
+    while C != Start:
+        F = list(M1.getFrontier(C))
+        P.append(F[0])
+        C = P[-1]
+    P.reverse()
+    print(P)
+
+
+##############################################################################
 
 def BFS_DFS(OR):
     Explored = []
     Frontier = []
     Frontier.append(Start)
+
     while True:
         N = Frontier.pop(OR)
-        print("Exploring ", N, " Now...")
+        if N not in Explored:
+            print("Exploring ", N, " Now...")
+            for i in G1.Graphe[N]:
+                M1.addEdge(i, N)
 
-        if N == End:
-            print("____________________We Found Solution____________________")
-            break
+            if N == End:
+                print("__________________We Found Solution__________________")
+                break
 
-        Frontier.extend(G1.getFrontier(N))
-        print("   Frontier: ", Frontier)
+            Frontier.extend(G1.getFrontier(N))
+            print("   Frontier: ", Frontier)
 
-        Explored.append(N)
-        print("  Explored: ", Explored)
+            Explored.append(N)
+            print("  Explored: ", Explored)
+
+
 ##############################################################################
-
-
 graph = {
-  '5': ['3', '7'],
-  '3': ['2', '4'],
-  '7': ['8'],
-  '2': [],
-  '4': ['8'],
-  '8': []
+  '1': ['3', '2'],
+  '2': ['4'],
+  '3': ['4', '5'],
+  '4': ['7'],
+  '5': ['6', '8'],
+  '6': ['9'],
+  '7': ['10'],
+  '8': ['6'],
+  '9': ['12'],
+  '10': ['6', '11'],
+  '12': ['13']
 }
 
 
 ##############################################################################
 G1 = Graphe()
+M1 = Graphe()
 for i in graph:
     for j in graph[i]:
         G1.addEdge(int(i), int(j))
 print(G1.Graphe)
 
+##############################################################################
 
 Start = int(input("Start From: "))
 End = int(input("End in: "))
@@ -62,3 +88,5 @@ if Methode == 1:
     BFS_DFS(0)
 if Methode == 2:
     BFS_DFS(-1)
+
+Path()
