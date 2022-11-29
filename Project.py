@@ -17,16 +17,20 @@ class Graphe():
 ##############################################################################
 
 
-def Path():
-    P = []
-    P.append(End)
-    C = P[-1]
+def Path(E):
+    Map = Graphe()
+    for i in E:
+        for j in G1.Graphe[i]:
+            Map.addEdge(j, i)
+    Back_Track = []
+    Back_Track.append(End)
+    C = Back_Track[-1]
     while C != Start:
-        F = list(M1.getFrontier(C))
-        P.append(F[0])
-        C = P[-1]
-    P.reverse()
-    print(P)
+        F = list(Map.getFrontier(C))
+        Back_Track.append(F[0])
+        C = Back_Track[-1]
+    Back_Track.reverse()
+    return Back_Track
 
 
 ##############################################################################
@@ -40,12 +44,10 @@ def BFS_DFS(OR):
         N = Frontier.pop(OR)
         if N not in Explored:
             print("Exploring ", N, " Now...")
-            for i in G1.Graphe[N]:
-                M1.addEdge(i, N)
 
             if N == End:
-                print("__________________We Found Solution__________________")
-                break
+                print("__________________We Found Solution_________________")
+                return Explored
 
             Frontier.extend(G1.getFrontier(N))
             print("   Frontier: ", Frontier)
@@ -55,27 +57,15 @@ def BFS_DFS(OR):
 
 
 ##############################################################################
-graph = {
-  '1': ['3', '2'],
-  '2': ['4'],
-  '3': ['4', '5'],
-  '4': ['7'],
-  '5': ['6', '8'],
-  '6': ['9'],
-  '7': ['10'],
-  '8': ['6'],
-  '9': ['12'],
-  '10': ['6', '11'],
-  '12': ['13']
-}
+graph = [(1, 3), (1, 2), (2, 4), (3, 4), (3, 5), (4, 7), (5, 6), (4, 7), (5, 6),
+ (5, 8), (6, 9), (7, 10), (8, 6), (9, 12), (10, 6), (10, 11), (12, 13)]
 
 
 ##############################################################################
 G1 = Graphe()
-M1 = Graphe()
+
 for i in graph:
-    for j in graph[i]:
-        G1.addEdge(int(i), int(j))
+    G1.addEdge(i[0], i[1])
 print(G1.Graphe)
 
 ##############################################################################
@@ -85,8 +75,8 @@ End = int(input("End in: "))
 Methode = int(input("choose a method: \n1- BFS \n2- DFS\n--> "))
 
 if Methode == 1:
-    BFS_DFS(0)
+    Exp = BFS_DFS(0)
 if Methode == 2:
-    BFS_DFS(-1)
+    Exp = BFS_DFS(-1)
 
-Path()
+print(Path(Exp))
