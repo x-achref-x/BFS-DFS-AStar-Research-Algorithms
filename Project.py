@@ -18,35 +18,42 @@ class Graphe():
 
 
 def Path(E):
-    Map = Graphe()
-    for i in E:
-        for j in G1.Graphe[i]:
-            Map.addEdge(j, i)
-    Back_Track = []
-    Back_Track.append(End)
-    C = Back_Track[-1]
-    while C != Start:
-        F = list(Map.getFrontier(C))
-        Back_Track.append(F[0])
-        C = Back_Track[-1]
-    Back_Track.reverse()
-    return Back_Track
+    if (End in E):
+        print("__________________We Found Solution_________________")
 
+        Map = Graphe()
+        for i in E:
+            for j in G1.Graphe[i]:
+                Map.addEdge(j, i)
+
+        Back_Track = []
+        Back_Track.append(End)
+        C = Back_Track[-1]
+        while C != Start:
+            F = list(Map.getFrontier(C))
+            Back_Track.append(F[0])
+            C = Back_Track[-1]
+        Back_Track.reverse()
+        return Back_Track
+    else:
+        print("__________________NO Solution Found_________________")
 
 ##############################################################################
+
 
 def BFS_DFS(OR):
     Explored = []
     Frontier = []
     Frontier.append(Start)
+    Frontier.append(Start)
 
-    while True:
+    while len(Frontier) > 0:
         N = Frontier.pop(OR)
         if N not in Explored:
             print("Exploring ", N, " Now...")
 
             if N == End:
-                print("__________________We Found Solution_________________")
+                Explored.append(N)
                 return Explored
 
             Frontier.extend(G1.getFrontier(N))
@@ -54,11 +61,12 @@ def BFS_DFS(OR):
 
             Explored.append(N)
             print("  Explored: ", Explored)
+    return Explored
 
 
 ##############################################################################
 graph = [(1, 3), (1, 2), (2, 4), (3, 4), (3, 5), (4, 7), (5, 6), (4, 7), (5, 6),
- (5, 8), (6, 9), (7, 10), (8, 6), (9, 12), (10, 6), (10, 11), (12, 13)]
+(5, 8), (6, 9), (7, 10), (8, 6), (9, 12), (10, 6), (10, 11), (12, 13)]
 
 
 ##############################################################################
