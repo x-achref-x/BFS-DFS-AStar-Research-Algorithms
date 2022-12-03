@@ -88,3 +88,52 @@ if Methode == 2:
     Exp = BFS_DFS(-1)
 
 print(Path(Exp))
+
+###############################################################################
+G2 = {
+    1: [(3, 9), (2, 7), (6, 14)],
+    2: [(3, 10), (4, 15)],
+    3: [(4, 11), (6, 2)],
+    4: [(5, 6)],
+    6: [(5, 9)],
+}
+Path = []
+Frontier = []
+Start = 1
+End = 5
+
+
+def A():
+    for x in G2[Start]:
+        Frontier.append(x)
+    print(Frontier)
+
+    while len(Frontier) > 0:
+        N = Frontier[0]
+        for y in Frontier:
+            if y[1] < N[1]:
+                N = y
+            if y[0] == End:
+                print("___Found Solution___")
+                return None
+        print(N)
+        Path.append(N)
+        Frontier.remove(N)
+
+        for x in G2[N[0]]:
+            Edit = list(x)
+            Edit[1] = Edit[1] + N[1]
+            x = tuple(Edit)
+            for a in Frontier:
+                if x[0] == a[0]:
+                    if x[1]<a[1]:
+                        Frontier.append(x)
+                        Frontier.remove(a)
+            if x not in Frontier:
+                Frontier.append(x)
+        print(Frontier)
+
+
+A()
+print()
+
